@@ -1,7 +1,6 @@
 var handler = function (compileStep) {
     var source = compileStep.read().toString('utf8');
     var outputFile = compileStep.inputPath + '.js';
-
     var path = compileStep.inputPath.split('.import.');
     var moduleId = path[0];
 
@@ -9,12 +8,11 @@ var handler = function (compileStep) {
         // inside package, prefix module
         moduleId = compileStep.packageName + '/' + moduleId;
     }
-
+    moduleId = moduleId + ".import";
     var extraWhitelist = ['es6.modules'];
     if(path[1] === 'jsx'){
         extraWhitelist.push('react');
     }
-
     try {
         var result = Babel.transformMeteor(source, {
             sourceMap: true,
